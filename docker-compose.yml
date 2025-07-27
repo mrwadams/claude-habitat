@@ -1,0 +1,35 @@
+# docker-compose.yml
+
+version: '3.8'
+services:
+  claude-habitat:
+    # Build the image from our local Dockerfile instead of pulling from a registry
+    build: .
+    
+    container_name: claude-habitat
+    ports:
+      - "8080:8080"
+      
+    volumes:
+      # 1. Your project code
+      - ./project:/home/coder/project
+
+      # 2. The CLI tool's configuration and auth tokens
+      # Most CLI tools save logins to the .config directory in the user's home.
+      # Persisting this one folder handles everything.
+      - ./cli-config:/home/coder/.config
+    
+    environment:
+      # Optional: Set password for code-server authentication
+      # PASSWORD: ${CODE_SERVER_PASSWORD:-}
+      # Disable telemetry
+      CS_DISABLE_TELEMETRY: 1
+      
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+      
+    restart: always
