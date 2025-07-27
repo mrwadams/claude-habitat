@@ -1,6 +1,5 @@
 # docker-compose.yml
 
-version: '3.8'
 services:
   claude-habitat:
     # Build the image from our local Dockerfile instead of pulling from a registry
