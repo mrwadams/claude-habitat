@@ -17,9 +17,9 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Create symlinks for python and pip
-RUN ln -s /usr/bin/python3 /usr/bin/python && \
-    ln -s /usr/bin/pip3 /usr/bin/pip
+# Create symlinks for python and pip if they don't exist
+RUN [ ! -e /usr/bin/python ] && ln -s /usr/bin/python3 /usr/bin/python || true && \
+    [ ! -e /usr/bin/pip ] && ln -s /usr/bin/pip3 /usr/bin/pip || true
 
 # Install essential Python packages only
 RUN pip install --no-cache-dir \

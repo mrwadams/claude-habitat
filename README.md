@@ -17,6 +17,22 @@ This repository provides a one-command setup to launch a personal, cloud-based d
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
+### Quick Install (Ubuntu/Debian)
+
+For Ubuntu-based systems (including Digital Ocean droplets), use our setup script:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/mrwadams/claude-habitat/main/setup.sh | bash
+```
+
+This script will:
+- Detect if Docker is already installed
+- Install Docker using the most appropriate method (official Docker repo or snap)
+- Add your user to the docker group
+- Install Docker Compose
+
+**Note:** You'll need to log out and back in after installation for group permissions to take effect.
+
 ## Getting Started
 
 1.  **Clone the Repository:**
