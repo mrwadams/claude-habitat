@@ -139,6 +139,8 @@ main() {
     
     # Check if we can run docker commands
     if docker info &> /dev/null; then
+        # Initialize directories with proper permissions
+        ./init.sh
         docker compose up -d
         
         echo ""

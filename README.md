@@ -43,6 +43,7 @@ This script will:
 
 2.  **Launch the Environment:**
     ```bash
+    ./init.sh  # Initialize directories with proper permissions
     docker compose up -d
     ```
     The first launch builds your custom Docker image. Subsequent launches will be instant.

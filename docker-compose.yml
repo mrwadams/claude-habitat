@@ -10,6 +10,9 @@ services:
     ports:
       - "8080:8080"
       
+    # Run as the coder user (UID 1000 by default in code-server)
+    user: "1000:1000"
+      
     volumes:
       # 1. Your project code
       - ./project:/home/coder/project
