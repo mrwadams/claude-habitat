@@ -120,15 +120,44 @@ main() {
     esac
     
     echo ""
-    echo "🎉 Setup complete!"
+    echo "🎉 Docker setup complete!"
     echo ""
-    echo "Next steps:"
-    echo "1. Log out and back in (required for Docker group permissions)"
-    echo "2. Clone the repository if you haven't:"
-    echo "   git clone https://github.com/mrwadams/claude-habitat.git"
-    echo "3. Start Claude Habitat:"
-    echo "   cd claude-habitat"
-    echo "   docker compose up -d"
+    
+    # Clone and start Claude Habitat
+    echo "📥 Cloning Claude Habitat repository..."
+    if [ -d "claude-habitat" ]; then
+        echo "⚠️  claude-habitat directory already exists. Updating..."
+        cd claude-habitat
+        git pull
+    else
+        git clone https://github.com/mrwadams/claude-habitat.git
+        cd claude-habitat
+    fi
+    
+    echo ""
+    echo "🚀 Starting Claude Habitat..."
+    
+    # Check if we can run docker commands
+    if docker info &> /dev/null; then
+        docker compose up -d
+        
+        echo ""
+        echo "✨ Claude Habitat is starting!"
+        echo ""
+        echo "Access your environment at: http://$(hostname -I | awk '{print $1}'):8080"
+        echo "Or if running locally: http://localhost:8080"
+        echo ""
+        echo "To check status: docker compose ps"
+        echo "To view logs: docker compose logs -f"
+        echo "To stop: docker compose down"
+    else
+        echo ""
+        echo "⚠️  Cannot start containers yet. Please log out and back in first (required for Docker permissions)."
+        echo ""
+        echo "After logging back in, start Claude Habitat with:"
+        echo "  cd claude-habitat"
+        echo "  docker compose up -d"
+    fi
 }
 
 # Run main function
