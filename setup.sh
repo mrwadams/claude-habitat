@@ -146,8 +146,20 @@ main() {
         echo ""
         echo "✨ Claude Habitat is starting!"
         echo ""
-        echo "Access your environment at: http://$(hostname -I | awk '{print $1}'):8080"
-        echo "Or if running locally: http://localhost:8080"
+        
+        # Wait a moment for code-server to generate its config
+        echo "Waiting for code-server to initialize..."
+        sleep 10
+        
+        # Try to get the password from inside the container
+        PASSWORD=$(docker exec claude-habitat cat /home/coder/.config/code-server/config.yaml 2>/dev/null | grep "^password:" | cut -d' ' -f2)
+        if [ -n "$PASSWORD" ]; then
+            echo "🔑 Code-server password: $PASSWORD"
+            echo ""
+        fi
+        
+        echo "📍 Access your environment at: http://$(hostname -I | awk '{print $1}'):8080"
+        echo "   Or if running locally: http://localhost:8080"
         echo ""
         echo "To check status: docker compose ps"
         echo "To view logs: docker compose logs -f"

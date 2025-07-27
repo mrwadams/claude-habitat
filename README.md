@@ -106,6 +106,14 @@ The container includes a health check that monitors the code-server status. You 
 docker compose ps
 ```
 
+### Retrieving the Code-server Password
+
+If you need to retrieve the auto-generated code-server password:
+
+```bash
+docker exec claude-habitat cat /home/coder/.config/code-server/config.yaml | grep "^password:" | cut -d' ' -f2
+```
+
 ---
 
 That's it. Your habitat is now fully configured. You can `docker compose down` and `docker compose up` at any time, and your `claude` CLI will remain authenticated and ready to use.
